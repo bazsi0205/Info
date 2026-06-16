@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bazsi — Profil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #07070f;
+      --bg-card:     #0e0e1c;
+      --bg-card-h:   #12122a;
+      --purple:      #7c3aed;
+      --purple-l:    #a855f7;
+      --cyan:        #06b6d4;
+      --text:        #f1f5f9;
+      --muted:       #64748b;
+      --border:      rgba(124,58,237,.18);
+      --border-h:    rgba(168,85,247,.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Ambient background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 700px 500px at 15% 15%, rgba(124,58,237,.09) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 350px at 85% 85%, rgba(6,182,212,.06) 0%, transparent 70%);
+    }
+
+    /* Dot grid overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: .9rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(22px);
+      background: rgba(7,7,15,.75);
+      border-bottom: 1px solid rgba(124,58,237,.14);
+    }
+    .nav-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: .08em;
+      background: linear-gradient(130deg, var(--purple-l), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .85rem;
+      letter-spacing: .04em; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 7rem 2rem 5rem;
+    }
+    .hero-inner { max-width: 680px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(124,58,237,.1);
+      border: 1px solid rgba(124,58,237,.3);
+      color: var(--purple-l);
+      padding: .3rem .9rem;
+      border-radius: 999px;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple-l);
+      animation: blink 2.2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.7); }
+    }
+
+    h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      font-weight: 700; line-height: 1.02; letter-spacing: -.02em;
+      margin-bottom: .9rem;
+    }
+    h1 .grad {
+      background: linear-gradient(130deg, var(--purple-l) 10%, var(--cyan) 90%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--muted); font-size: 1rem; font-weight: 300;
+      max-width: 480px; margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem; border-radius: 10px;
+      font-size: .88rem; font-weight: 500; text-decoration: none;
+      transition: transform .18s, box-shadow .18s;
+      letter-spacing: .02em;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(130deg, var(--purple), var(--purple-l));
+      color: #fff;
+      box-shadow: 0 0 24px rgba(124,58,237,.35);
+    }
+    .btn-primary:hover { box-shadow: 0 0 36px rgba(124,58,237,.55); }
+    .btn-ghost {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.09); border-color: var(--border-h); }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto; padding: 5rem 2rem;
+    }
+    .section-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: .6rem;
+    }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700; letter-spacing: -.01em; margin-bottom: 2.5rem;
+    }
+
+    /* ── SOCIAL CARDS ── */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .social-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.6rem 1.4rem;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: .65rem;
+      overflow: hidden;
+      transition: border-color .28s, background .28s, transform .2s;
+    }
+    .social-card::after {
+      content: '';
+      position: absolute; inset: 0; border-radius: 18px;
+      background: var(--glow, transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .social-card:hover { background: var(--bg-card-h); border-color: var(--accent); transform: translateY(-4px); }
+    .social-card:hover::after { opacity: 1; }
+
+    .social-card[data-p="yt"]  { --accent:#ff2222; --glow:radial-gradient(ellipse at 0% 0%,rgba(255,34,34,.08),transparent 65%); }
+    .social-card[data-p="tw"]  { --accent:#9146ff; --glow:radial-gradient(ellipse at 0% 0%,rgba(145,70,255,.1),transparent 65%); }
+    .social-card[data-p="tt"]  { --accent:#ff0050; --glow:radial-gradient(ellipse at 0% 0%,rgba(255,0,80,.08),transparent 65%); }
+    .social-card[data-p="dc"]  { --accent:#5865f2; --glow:radial-gradient(ellipse at 0% 0%,rgba(88,101,242,.1),transparent 65%); }
+
+    .sc-top { display:flex; align-items:flex-start; justify-content:space-between; }
+    .sc-icon {
+      font-size: 1.7rem; width: 46px; height: 46px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(255,255,255,.05); border-radius: 12px;
+      color: var(--accent);
+    }
+    .sc-arrow {
+      color: var(--muted); font-size: .85rem;
+      transition: transform .2s, color .2s; z-index: 1;
+    }
+    .social-card:hover .sc-arrow { transform: translate(3px,-3px); color: var(--accent); }
+    .sc-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem; font-weight: 700; letter-spacing: .02em;
+      z-index: 1;
+    }
+    .sc-handle { font-size: .78rem; color: var(--muted); z-index: 1; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; margin: 0 2rem;
+      background: linear-gradient(90deg,transparent,rgba(124,58,237,.25),transparent);
+    }
+
+    /* ── GEAR GRID ── */
+    .gear-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.1rem;
+    }
+    .gear-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.6rem 1.5rem;
+      transition: border-color .28s, transform .2s;
+    }
+    .gear-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+
+    .gc-cat {
+      font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: .7rem;
+    }
+    .gc-emoji { font-size: 2rem; margin-bottom: .9rem; display:block; }
+    .gc-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.35rem; font-weight: 700; line-height: 1.2; margin-bottom: .35rem;
+    }
+    .gc-detail { font-size: .8rem; color: var(--muted); }
+
+    /* ── PERIPHERAL LIST ── */
+    .periph-list { display: flex; flex-direction: column; gap: .75rem; margin-top: .3rem; }
+    .periph-item {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .65rem .9rem;
+      background: rgba(124,58,237,.06);
+      border: 1px solid rgba(124,58,237,.12);
+      border-radius: 10px;
+    }
+    .pi-icon { font-size: 1.1rem; width: 32px; text-align:center; flex-shrink:0; }
+    .pi-label {
+      font-size: .65rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: .1rem;
+    }
+    .pi-val { font-size: .88rem; font-weight: 500; }
+
+    /* ── SCOOTER HIGHLIGHT ── */
+    .gear-card.scooter {
+      background: linear-gradient(135deg, rgba(6,182,212,.06), var(--bg-card));
+      border-color: rgba(6,182,212,.2);
+    }
+    .gear-card.scooter:hover { border-color: rgba(6,182,212,.5); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 2.5rem 2rem;
+      color: var(--muted); font-size: .78rem;
+      border-top: 1px solid rgba(124,58,237,.1);
+    }
+    footer span { color: var(--purple-l); }
+
+    /* ── FADE IN ── */
+    .fi {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fi.vis { opacity: 1; transform: none; }
+    .fi:nth-child(2) { transition-delay: .08s; }
+    .fi:nth-child(3) { transition-delay: .16s; }
+    .fi:nth-child(4) { transition-delay: .24s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: .8rem 1.25rem; }
+      .nav-links { display: none; }
+      .section-wrap { padding: 3.5rem 1.25rem; }
+      h1 { font-size: 3rem; }
+    }
+    @media (min-width: 900px) {
+      .gear-periph { grid-column: span 2; }
+      .periph-list  { flex-direction: row; flex-wrap: wrap; }
+      .periph-item  { flex: 1 1 calc(33% - .5rem); min-width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">BAZSI</div>
+    <ul class="nav-links">
+      <li><a href="#social">Közösség</a></li>
+      <li><a href="#setup">Setup</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="dot"></span>Content Creator &amp; Gamer</div>
+      <h1>Szia,<br><span class="grad">Bazsi</span> vagyok</h1>
+      <p class="hero-sub">Tartalmakat készítek YouTube-on, élek Twitch-en, és posztolok TikTokon — csatlakozz a közösséghez!</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://www.youtube.com/@bazsi02.05" target="_blank" rel="noopener">
+          <i class="fab fa-youtube"></i> YouTube
+        </a>
+        <a class="btn btn-ghost" href="https://discord.gg/ZFMH5J49fN" target="_blank" rel="noopener">
+          <i class="fab fa-discord"></i> Discord Szerver
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <div class="section-wrap" id="social">
+    <p class="section-label">Közösség</p>
+    <h2 class="section-title">Megtalálhatsz itt</h2>
+    <div class="social-grid">
+
+      <a class="social-card fi" data-p="yt" href="https://www.youtube.com/@bazsi02.05" target="_blank" rel="noopener">
+        <div class="sc-top">
+          <div class="sc-icon"><i class="fab fa-youtube"></i></div>
+          <i class="fas fa-arrow-up-right sc-arrow"></i>
+        </div>
+        <div class="sc-name">YouTube</div>
+        <div class="sc-handle">@bazsi02.05</div>
+      </a>
+
+      <a class="social-card fi" data-p="tw" href="https://www.twitch.tv/bazsi0205" target="_blank" rel="noopener">
+        <div class="sc-top">
+          <div class="sc-icon"><i class="fab fa-twitch"></i></div>
+          <i class="fas fa-arrow-up-right sc-arrow"></i>
+        </div>
+        <div class="sc-name">Twitch</div>
+        <div class="sc-handle">bazsi0205</div>
+      </a>
+
+      <a class="social-card fi" data-p="tt" href="https://www.tiktok.com/@bazsi0205?lang=hu-HU" target="_blank" rel="noopener">
+        <div class="sc-top">
+          <div class="sc-icon"><i class="fab fa-tiktok"></i></div>
+          <i class="fas fa-arrow-up-right sc-arrow"></i>
+        </div>
+        <div class="sc-name">TikTok</div>
+        <div class="sc-handle">@bazsi0205</div>
+      </a>
+
+      <a class="social-card fi" data-p="dc" href="https://discord.gg/ZFMH5J49fN" target="_blank" rel="noopener">
+        <div class="sc-top">
+          <div class="sc-icon"><i class="fab fa-discord"></i></div>
+          <i class="fas fa-arrow-up-right sc-arrow"></i>
+        </div>
+        <div class="sc-name">Discord</div>
+        <div class="sc-handle">Csatlakozz a szerverhez!</div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SETUP -->
+  <div class="section-wrap" id="setup">
+    <p class="section-label">Felszerelés</p>
+    <h2 class="section-title">Amivel dolgozom</h2>
+    <div class="gear-grid">
+
+      <!-- Laptop -->
+      <div class="gear-card fi">
+        <div class="gc-cat">Laptop</div>
+        <span class="gc-emoji">💻</span>
+        <div class="gc-name">Lenovo Y700‑15ISK</div>
+        <div class="gc-detail">Gaming laptop · Intel Core i7 · IPS Full HD kijelző</div>
+      </div>
+
+      <!-- Telefon -->
+      <div class="gear-card fi">
+        <div class="gc-cat">Telefon</div>
+        <span class="gc-emoji">📱</span>
+        <div class="gc-name">Redmi Note 9 Pro</div>
+        <div class="gc-detail">Snapdragon 720G · 64 MP kamera · 5020 mAh akku</div>
+      </div>
+
+      <!-- Perifériák -->
+      <div class="gear-card gear-periph fi">
+        <div class="gc-cat">Perifériák</div>
+        <span class="gc-emoji">🎮</span>
+        <div class="periph-list">
+          <div class="periph-item">
+            <div class="pi-icon">🎧</div>
+            <div>
+              <div class="pi-label">Fejhallgató</div>
+              <div class="pi-val">HyperX Cloud 3</div>
+            </div>
+          </div>
+          <div class="periph-item">
+            <div class="pi-icon">🖱️</div>
+            <div>
+              <div class="pi-label">Egér</div>
+              <div class="pi-val">Yenkee YMS 3010 PRISMA</div>
+            </div>
+          </div>
+          <div class="periph-item">
+            <div class="pi-icon">🖤</div>
+            <div>
+              <div class="pi-label">Egérpad</div>
+              <div class="pi-val">ASUS ROG Sheath</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roller -->
+      <div class="gear-card scooter fi">
+        <div class="gc-cat">Elektromos Roller</div>
+        <span class="gc-emoji">🛴</span>
+        <div class="gc-name">Kukirin G2 2026 V.</div>
+        <div class="gc-detail">2026-os kiadás · Elektromos roller · Off-road képes</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 <span>Bazsi</span>. Minden jog fenntartva.
+  </footer>
+
+  <script>
+    // Scroll fade-in
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+    // Staggered delay on sibling cards
+    document.querySelectorAll('.social-grid, .gear-grid').forEach(grid => {
+      [...grid.children].forEach((card, i) => {
+        card.style.transitionDelay = (i * 0.08) + 's';
+      });
+    });
+  </script>
+
+</body>
+</html>
